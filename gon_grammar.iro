@@ -30,12 +30,12 @@ styles [] {
 
    .array_field : style {
       color     = gold
-      textmate_scope        = support.class
+      textmate_scope        = entity.name.type
    }
    
    .object_field : style {
       color     = yellow
-      textmate_scope        = support.class
+      textmate_scope        = entity.name.type
    }
    
    .regular_field : style {
