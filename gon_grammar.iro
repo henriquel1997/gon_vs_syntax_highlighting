@@ -1,0 +1,196 @@
+#################################################################
+## Iro
+################################################################ 
+##
+## * Press Ctrl + '+'/'-' To Zoom in
+## * Press Ctrl + S to save and recalculate... 
+## * Documents are saved to web storage.
+## * Only one save slot supported.
+## * Matches cannot span lines.
+## * Unicode chars must be defined in \u0000 to \uffff format.
+## * All matches must be contained by a single group ( ... )
+## * Look behinds not permitted, (?<= or (?<!
+## * Look forwards are permitted (?= or (?!
+## * Constants are defined as __my_const = (......)
+## * The \= format allows unescaped regular expressions
+## * Constants referenced by match \= $${__my_const}
+## * Constants can reference other constants
+## * You are free to delete all the default scopes.
+## * Twitter : ainslec , Web: http://eeyo.io/iro
+##
+################################################################
+
+name                   = gon
+file_extensions []     = gon;
+
+################################################################
+## Styles
+################################################################
+styles [] {
+
+   .array_field : style {
+      color     = gold
+      textmate_scope        = entity.name
+   }
+   
+   .object_field : style {
+      color     = yellow
+      textmate_scope        = entity.name
+   }
+   
+   .regular_field : style {
+      color     = green
+      textmate_scope        = entity.name
+   }
+
+   .bool : style {
+      color     = red
+      textmate_scope        = constant.language
+   }
+   
+   .number : style {
+      color     = cyan
+      textmate_scope        = constant.numeric
+   }
+   
+   .punctuation : style {
+      color     = red_2
+      textmate_scope        = keyword.operator
+   }
+   
+   .text : style {
+      color     = brown
+      textmate_scope        = string
+   }
+   
+   .comment : style {
+      color     = grey
+      textmate_scope        = comment
+   }
+
+}
+
+################################################################
+## Contexts
+################################################################
+contexts[] {
+ main : context {
+   
+   : inline_push {
+      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\{)
+      styles []       = .object_field;
+      : eol_pop{}
+      : include "object" ;
+   }
+   
+   : inline_push {
+      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\[)
+      styles []       = .array_field;
+      : eol_pop{}
+      : include "array" ;
+   }
+   
+   : inline_push {
+      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)
+      styles []       = .regular_field;
+      : eol_pop{}
+      : include "bool" ;
+      : include "number" ;
+      : include "string" ;
+      : include "quoteless_string" ;
+   }
+   
+   : include "object" ;
+   : include "array" ;
+   
+   
+   : include "comments" ;
+ }
+ 
+ comments : context {
+ 
+   : inline_push {
+      regex          \= (/\*)
+      styles []       = .comment;
+      default_style   = .comment
+      : pop {
+         regex       \= (\*/)
+         styles []    = .comment;
+      }
+   }
+   
+   : pattern {
+      regex          \= (//.*)
+      styles []       = .comment;
+   }
+   
+   : pattern {
+      regex          \= (#.*)
+      styles []       = .comment;
+   }
+ }
+ 
+ object : context {
+   : inline_push {
+      regex          \= (\{)
+      styles []       = .punctuation;
+      : pop {  
+         regex       \= (\})
+         styles []    = .punctuation;
+      }
+      : include "main" ;
+   }
+ }
+ 
+ array : context {
+   : inline_push {
+      regex          \= (\[)
+      styles []       = .punctuation;
+      : pop {  
+         regex       \= (\])
+         styles []    = .punctuation;
+      }
+      : pattern {
+         regex       \= (,)
+         styles []    = .punctuation;
+      }
+      : include "bool" ;
+      : include "number" ;
+      : include "string" ;
+      : include "quoteless_string" ;
+   }
+ }
+ 
+ string : context {
+   : inline_push {
+      regex          \= (\")
+      styles []       = .text;
+      default_style   = .text
+      : pop {
+         regex       \= (\")
+         styles []    = .text;
+      }
+   }
+ }
+ 
+ quoteless_string : context {
+   : pattern {
+      regex          \= ([^\s|,]+(?=\,|\s|$))
+      styles []       = .text;
+   }
+ }
+ 
+ number : context {
+   : pattern {
+      regex \= ([-+]?[0-9]*\.?[0-9]+$)
+      styles = .number
+   }
+ }
+ 
+ bool : context {
+   : pattern {
+      regex \= (true|false)
+      styles = .bool
+   }
+ }
+}

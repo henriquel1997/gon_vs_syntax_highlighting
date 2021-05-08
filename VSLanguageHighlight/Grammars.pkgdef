@@ -1,0 +1,13 @@
+﻿; Registering the package
+[$RootKey$\InstalledProducts\VSLanguageHighlightPackage]
+"Package"="{4deaa839-261a-4fa6-a231-0298f12588d3}"
+[$RootKey$\BindingPaths\{4deaa839-261a-4fa6-a231-0298f12588d3}]
+"$PackageFolder$"=""
+
+; Registering the TextMate grammar
+[$RootKey$\TextMate\Repositories]
+"VSLanguageHighlight"="$PackageFolder$\Syntaxes"
+
+; Match file extensions with icons. See full icon list at https://glyphlist.azurewebsites.net/knownmonikers/
+[$RootKey$\ShellFileAssociations\.gon]
+"DefaultIconMoniker"="KnownMonikers.Airbrush"
