@@ -34,7 +34,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.class.gon</string>
             </dict>
           </dict>
           <key>patterns</key>
@@ -51,7 +51,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.class.gon</string>
             </dict>
           </dict>
         </dict>
@@ -63,7 +63,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.class.gon</string>
             </dict>
           </dict>
           <key>patterns</key>
@@ -80,7 +80,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.class.gon</string>
             </dict>
           </dict>
         </dict>
@@ -92,7 +92,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.variable.gon</string>
             </dict>
           </dict>
           <key>patterns</key>
@@ -109,7 +109,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.gon</string>
+              <string>support.class.gon</string>
             </dict>
           </dict>
         </dict>
@@ -185,8 +185,12 @@
           <string>#string</string>
         </dict>
         <dict>
-          <key>include</key>
-          <string>#quoteless_string</string>
+          <key>match</key>
+          <string>(([^\s\x{007c}\x{002c}\x{007c}\[\x{007c}\{]+)(?=\s|\,|\}|\]))</string>
+          <key>name</key>
+          <string>string.gon</string>
+          <key>comment</key>
+          <string>array_quoteless_string</string>
         </dict>
        </array>
     </dict>
@@ -287,8 +291,12 @@
           <string>#string</string>
         </dict>
         <dict>
-          <key>include</key>
-          <string>#quoteless_string</string>
+          <key>match</key>
+          <string>([^\s\x{007c}\x{002c}]+(?=\,|\s|$))</string>
+          <key>name</key>
+          <string>string.gon</string>
+          <key>comment</key>
+          <string>field_quoteless_string</string>
         </dict>
        </array>
     </dict>
@@ -298,7 +306,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>([-\x{002b}]?[0-9]*\.?[0-9]+$)</string>
+          <string>([-\x{002b}]?[0-9]*\.?[0-9]+)(?=\s|\,|\}|\]|$)</string>
           <key>name</key>
           <string>constant.numeric.gon</string>
         </dict>
@@ -346,18 +354,6 @@
         <dict>
           <key>include</key>
           <string>#main</string>
-        </dict>
-       </array>
-    </dict>
-    <key>quoteless_string</key>
-    <dict>
-      <key>patterns</key>
-      <array> 
-        <dict>
-          <key>match</key>
-          <string>([^\s\x{007c}\x{002c}]+(?=\,|\s|$))</string>
-          <key>name</key>
-          <string>string.gon</string>
         </dict>
        </array>
     </dict>
