@@ -173,7 +173,7 @@ contexts[] {
       : include "string" ;
       : pattern {
          description = array_quoteless_string
-         regex          \= (([^\s|,|\[|\{]+)(?=\s|\,|\}|\]))
+         regex          \= ([^(\s|\,|\[|\{|\}|\])]+(?=\s|\,|\}|\]))
          styles []       = .text;
       }
    }
