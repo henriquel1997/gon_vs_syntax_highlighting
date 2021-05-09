@@ -87,31 +87,43 @@ contexts[] {
  main : context {
    
    : inline_push {
+      description = object_field
       regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\{)
       styles []       = .object_field;
       : eol_pop{}
+      /*: pop {  
+         regex       \= (?=\]|\[|\/|$)
+         styles []    = .object_field;
+      }*/
       : include "object" ;
    }
    
    : inline_push {
-      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\[)
+      description = array_field
+      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=(\s*)\[)
       styles []       = .array_field;
       : eol_pop{}
+      /*: pop {  
+         regex       \= (?=\}|\{|\/|$)
+         styles []    = .array_field;
+      }*/
       : include "array" ;
    }
    
    : inline_push {
+      description = regular_field
       regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)
       styles []       = .regular_field;
       : eol_pop{}
+      /*: pop {  
+         description = regular_field_end
+         regex       \= (?=\}|\]|\{|\[|\/|$)
+         styles []    = .regular_field;
+      }*/
       : include "bool" ;
       : include "number" ;
       : include "string" ;
-      : pattern {
-         description = field_quoteless_string
-         regex          \= ([^\s|,]+(?=\,|\s|$))
-         styles []       = .text;
-      }
+      : include "quoteless_string" ;
    }
    
    : include "object" ;
@@ -124,6 +136,7 @@ contexts[] {
  comments : context {
  
    : inline_push {
+      description = multiline_comment
       regex          \= (/\*)
       styles []       = .comment;
       default_style   = .comment
@@ -134,11 +147,13 @@ contexts[] {
    }
    
    : pattern {
+      description = regular_comment
       regex          \= (//.*)
       styles []       = .comment;
    }
    
    : pattern {
+      description = hash_comment
       regex          \= (#.*)
       styles []       = .comment;
    }
@@ -146,9 +161,11 @@ contexts[] {
  
  object : context {
    : inline_push {
+      description = object_opening_bracket
       regex          \= (\{)
       styles []       = .object_curly_brackets;
-      : pop {  
+      : pop {
+         description = object_closing_bracket
          regex       \= (\})
          styles []    = .object_curly_brackets;
       }
@@ -158,29 +175,31 @@ contexts[] {
  
  array : context {
    : inline_push {
+      description = array_opening_bracket
       regex          \= (\[)
       styles []       = .array_brackets;
-      : pop {  
+      : pop {
+         description = array_closing_bracket
          regex       \= (\])
          styles []    = .array_brackets;
       }
       : pattern {
+         description = comma
          regex       \= (,)
          styles []    = .comma;
       }
+      : include "array";
+      : include "comments";
       : include "bool" ;
       : include "number" ;
       : include "string" ;
-      : pattern {
-         description = array_quoteless_string
-         regex          \= ([^(\s|\,|\[|\{|\}|\])]+(?=\s|\,|\}|\]|$))
-         styles []       = .text;
-      }
+      : include "quoteless_string" ;
    }
  }
  
  string : context {
    : inline_push {
+      description = string
       regex          \= (\")
       styles []       = .text;
       default_style   = .text
@@ -191,8 +210,17 @@ contexts[] {
    }
  }
  
+ quoteless_string : context {
+   : pattern {
+      description = quoteless_string
+      regex       \= ([^(\s|\,|\[|\{|\}|\])]+(?=\s|\,|\}|\]|$))
+      styles []   = .text;
+   }
+ }
+ 
  number : context {
    : pattern {
+      description = number
       regex \= ([-+]?[0-9]*\.?[0-9]+)(?=\s|\,|\}|\]|$)
       styles = .number
    }
@@ -200,6 +228,7 @@ contexts[] {
  
  bool : context {
    : pattern {
+      description = bool
       regex \= (true|false)
       styles = .bool
    }
