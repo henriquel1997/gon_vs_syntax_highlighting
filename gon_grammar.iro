@@ -166,6 +166,12 @@ contexts[] {
       regex          \= (\])
       styles []       = .illegal;
    }
+   
+   : pattern {
+      description = illegal_comma
+      regex          \= (\,)
+      styles []       = .illegal;
+   }
  }
  
  comments : context {
