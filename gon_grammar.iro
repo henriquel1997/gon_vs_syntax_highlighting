@@ -90,7 +90,7 @@ contexts[] {
    
    : inline_push {
       description = object_field
-      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\{)
+      regex          \= (((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+))(?=(\s*)\{))
       styles []       = .object_field;
       : eol_pop{}
       : include "object" ;
@@ -98,7 +98,7 @@ contexts[] {
    
    : inline_push {
       description = array_field
-      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=(\s*)\[)
+      regex          \= (((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+))(?=(\s*)\[))
       styles []       = .array_field;
       : eol_pop{}
       : include "array" ;
@@ -106,7 +106,7 @@ contexts[] {
    
    : inline_push {
       description = regular_field
-      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)
+      regex          \= (((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+)))
       styles []       = .regular_field;
       : pop {
          regex       \= (?:(true|false)|([-+]?[0-9]*\.?[0-9]+)(?=\s|\,|\}|\]|$)|((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+)))
