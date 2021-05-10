@@ -32,13 +32,18 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(((?:&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|(?:[^\x{0028}\s\,\[\{\}\]\x{0023}\/\x{0024}\x{0029}]+))(?=(\s*)\{))</string>
+            <string>((?:&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|(?:[^\x{0028}\s\,\[\{\}\]\x{0023}\/\x{0024}\x{0029}]+))(\s*\{)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
                 <string>entity.name.type.gon</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.gon</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -61,13 +66,18 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(((?:&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|(?:[^\x{0028}\s\,\[\{\}\]\x{0023}\/\x{0024}\x{0029}]+))(?=(\s*)\[))</string>
+            <string>((?:&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|(?:[^\x{0028}\s\,\[\{\}\]\x{0023}\/\x{0024}\x{0029}]+))(\s*\[)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
                 <string>entity.name.type.gon</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.gon</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -313,14 +323,6 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>match</key>
-            <string>(\{)</string>
-            <key>name</key>
-            <string>keyword.operator.gon</string>
-            <key>comment</key>
-            <string>object_opening_bracket</string>
-          </dict>
-          <dict>
             <key>include</key>
             <string>#main</string>
           </dict>
@@ -332,14 +334,6 @@
         <array>
           <dict>
             <key>match</key>
-            <string>(\[)</string>
-            <key>name</key>
-            <string>keyword.operator.gon</string>
-            <key>comment</key>
-            <string>array_opening_bracket</string>
-          </dict>
-          <dict>
-            <key>match</key>
             <string>(,)</string>
             <key>name</key>
             <string>keyword.operator.gon</string>
@@ -349,6 +343,14 @@
           <dict>
             <key>include</key>
             <string>#array</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\[)</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_brackets</string>
           </dict>
           <dict>
             <key>include</key>
