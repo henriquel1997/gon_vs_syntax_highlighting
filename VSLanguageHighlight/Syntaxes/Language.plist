@@ -27,6 +27,10 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>include</key>
+            <string>#comments</string>
+          </dict>
+          <dict>
             <key>begin</key>
             <string>(\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\{)</string>
             <key>beginCaptures</key>
@@ -86,7 +90,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>([a-zA-Z_][a-zA-Z_0-9]*(\s|$)+)</string>
+            <string>(\b[a-zA-Z_][a-zA-Z_0-9]*)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -103,13 +107,23 @@
               </dict>
             </array>
             <key>end</key>
-            <string>((\s|$)+)</string>
+            <string>(?:(true|false)|([-\x{002b}]?[0-9]*\.?[0-9]+)(?=\s|\,|\}|\]|$)|((?:&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|(?:[^\x{0028}\s\,\[\{\}\]\x{0023}\/\x{0024}\x{0029}]+)))</string>
             <key>endCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.variable.gon</string>
+                <string>constant.language.gon</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.gon</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string.gon</string>
               </dict>
             </dict>
           </dict>
@@ -120,10 +134,6 @@
           <dict>
             <key>include</key>
             <string>#array</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#comments</string>
           </dict>
         </array>
       </dict>
@@ -177,6 +187,10 @@
           <dict>
             <key>include</key>
             <string>#array</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#object</string>
           </dict>
           <dict>
             <key>include</key>
@@ -289,18 +303,6 @@
           <dict>
             <key>include</key>
             <string>#comments</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#bool</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#number</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#string</string>
           </dict>
         </array>
       </dict>
