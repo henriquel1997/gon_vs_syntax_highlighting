@@ -92,16 +92,44 @@ contexts[] {
       description = object_field
       regex          \= (((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+))(?=(\s*)\{))
       styles []       = .object_field;
-      : eol_pop{}
-      : include "object" ;
+      : pop {
+         description = object_closing_bracket
+         regex       \= (\})
+         styles []    = .object_curly_brackets;
+      }
+      : pattern {
+         description = object_opening_bracket
+         regex       \= (\{)
+         styles []    = .object_curly_brackets;
+      }
+      : include "main" ;
    }
    
    : inline_push {
       description = array_field
       regex          \= (((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]#\/$)]+))(?=(\s*)\[))
       styles []       = .array_field;
-      : eol_pop{}
-      : include "array" ;
+      : pop {
+         description = array_closing_bracket
+         regex       \= (\])
+         styles []    = .array_brackets;
+      }
+      : pattern {
+         description = array_opening_bracket
+         regex       \= (\[)
+         styles []    = .array_brackets;
+      }
+      : pattern {
+         description = comma
+         regex       \= (,)
+         styles []    = .comma;
+      }
+      : include "array";
+      : include "object";
+      : include "comments";
+      : include "bool" ;
+      : include "number" ;
+      : include "string" ;
    }
    
    : inline_push {

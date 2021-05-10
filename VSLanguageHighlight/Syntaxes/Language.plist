@@ -49,13 +49,13 @@
               </dict>
             </array>
             <key>end</key>
-            <string>(^(?=.{0,1})(?:|))</string>
+            <string>(\})</string>
             <key>endCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>entity.name.type.gon</string>
+                <string>keyword.operator.gon</string>
               </dict>
             </dict>
           </dict>
@@ -78,13 +78,13 @@
               </dict>
             </array>
             <key>end</key>
-            <string>(^(?=.{0,1})(?:|))</string>
+            <string>(\])</string>
             <key>endCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>entity.name.type.gon</string>
+                <string>keyword.operator.gon</string>
               </dict>
             </dict>
           </dict>
@@ -281,8 +281,16 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>match</key>
+            <string>(\{)</string>
+            <key>name</key>
+            <string>keyword.operator.gon</string>
+            <key>comment</key>
+            <string>object_opening_bracket</string>
+          </dict>
+          <dict>
             <key>include</key>
-            <string>#object</string>
+            <string>#main</string>
           </dict>
         </array>
       </dict>
@@ -291,8 +299,44 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>match</key>
+            <string>(\[)</string>
+            <key>name</key>
+            <string>keyword.operator.gon</string>
+            <key>comment</key>
+            <string>array_opening_bracket</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(,)</string>
+            <key>name</key>
+            <string>keyword.operator.gon</string>
+            <key>comment</key>
+            <string>comma</string>
+          </dict>
+          <dict>
             <key>include</key>
             <string>#array</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#object</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#comments</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#bool</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#number</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#string</string>
           </dict>
         </array>
       </dict>
