@@ -128,12 +128,36 @@
             </dict>
           </dict>
           <dict>
-            <key>include</key>
-            <string>#object</string>
+            <key>match</key>
+            <string>(\{)</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_curly_brackets</string>
           </dict>
           <dict>
-            <key>include</key>
-            <string>#array</string>
+            <key>match</key>
+            <string>(\})</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_closing_curly_brackets</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\[)</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_brackets</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\])</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_brackets</string>
           </dict>
         </array>
       </dict>
@@ -183,6 +207,14 @@
             <string>keyword.operator.gon</string>
             <key>comment</key>
             <string>comma</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\[)</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_brackets</string>
           </dict>
           <dict>
             <key>include</key>
@@ -403,6 +435,14 @@
       <dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>match</key>
+            <string>(\{)</string>
+            <key>name</key>
+            <string>invalid.gon</string>
+            <key>comment</key>
+            <string>illegal_opening_curly_brackets</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#main</string>

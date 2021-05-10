@@ -77,7 +77,12 @@ styles [] {
       color     = grey
       textmate_scope        = comment
    }
-
+   
+   .illegal : style {
+      color            = white
+      background_color = red
+      textmate_scope        = invalid
+   }
 }
 
 ################################################################
@@ -143,8 +148,29 @@ contexts[] {
       : include "comments";
    }
    
-   : include "object" ;
-   : include "array" ;
+   : pattern {
+      description = illegal_opening_curly_brackets
+      regex          \= (\{)
+      styles []       = .illegal;
+   }
+   
+   : pattern {
+      description = illegal_closing_curly_brackets
+      regex          \= (\})
+      styles []       = .illegal;
+   }
+   
+   : pattern {
+      description = illegal_opening_brackets
+      regex          \= (\[)
+      styles []       = .illegal;
+   }
+   
+   : pattern {
+      description = illegal_opening_brackets
+      regex          \= (\])
+      styles []       = .illegal;
+   }
  }
  
  comments : context {
@@ -183,6 +209,11 @@ contexts[] {
          regex       \= (\})
          styles []    = .object_curly_brackets;
       }
+      : pattern {
+         description = illegal_opening_curly_brackets
+         regex          \= (\{)
+         styles []       = .illegal;
+      }
       : include "main" ;
    }
  }
@@ -201,6 +232,11 @@ contexts[] {
          description = comma
          regex       \= (,)
          styles []    = .comma;
+      }
+      : pattern {
+         description = illegal_opening_brackets
+         regex          \= (\[)
+         styles []       = .illegal;
       }
       : include "array";
       : include "object";
