@@ -91,10 +91,6 @@ contexts[] {
       regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=\s*\{)
       styles []       = .object_field;
       : eol_pop{}
-      /*: pop {  
-         regex       \= (?=\]|\[|\/|$)
-         styles []    = .object_field;
-      }*/
       : include "object" ;
    }
    
@@ -103,27 +99,35 @@ contexts[] {
       regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)(?=(\s*)\[)
       styles []       = .array_field;
       : eol_pop{}
-      /*: pop {  
-         regex       \= (?=\}|\{|\/|$)
-         styles []    = .array_field;
-      }*/
       : include "array" ;
    }
    
+   //WIP
+   /*: inline_push {
+      description = regular_field
+      regex          \= ((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]$)]+))
+      styles []       = .regular_field;
+      default_style   = .regular_field
+      
+      : pop {
+         regex       \= (?:(true|false)|([-+]?[0-9]*\.?[0-9]+)(?=\s|\,|\}|\]|$)|((?:"(?:[^"\\]|\\.)*")|(?:[^(\s\,\[\{\}\]$)]+)))
+         styles []       = .bool, .number, .text;
+      }
+   }*/
+   
    : inline_push {
       description = regular_field
-      regex          \= (\b[a-zA-Z_][a-zA-Z_0-9]*)
+      regex          \= ([a-zA-Z_][a-zA-Z_0-9]*(\s|$)+)
       styles []       = .regular_field;
-      : eol_pop{}
-      /*: pop {  
+      : pop {  
          description = regular_field_end
-         regex       \= (?=\}|\]|\{|\[|\/|$)
+         regex       \= ((\s|$)+)
          styles []    = .regular_field;
-      }*/
+      }
+      : include "comments" ;
       : include "bool" ;
       : include "number" ;
       : include "string" ;
-      : include "quoteless_string" ;
    }
    
    : include "object" ;
@@ -141,7 +145,7 @@ contexts[] {
       styles []       = .comment;
       default_style   = .comment
       : pop {
-         regex       \= (\*/)
+         regex       \= (\*/(\s|$)*)
          styles []    = .comment;
       }
    }
@@ -193,27 +197,13 @@ contexts[] {
       : include "bool" ;
       : include "number" ;
       : include "string" ;
-      : include "quoteless_string" ;
    }
  }
  
  string : context {
-   : inline_push {
-      description = string
-      regex          \= (\")
-      styles []       = .text;
-      default_style   = .text
-      : pop {
-         regex       \= (\")
-         styles []    = .text;
-      }
-   }
- }
- 
- quoteless_string : context {
    : pattern {
-      description = quoteless_string
-      regex       \= ([^(\s|\,|\[|\{|\}|\])]+(?=\s|\,|\}|\]|$))
+      description = string
+      regex       \= (("(?:[^"\\]|\\.)*")|([^(\s\,\[\{\}\]$)]+))
       styles []   = .text;
    }
  }

@@ -86,7 +86,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\b[a-zA-Z_][a-zA-Z_0-9]*)</string>
+            <string>([a-zA-Z_][a-zA-Z_0-9]*(\s|$)+)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -103,13 +103,13 @@
               </dict>
             </array>
             <key>end</key>
-            <string>(^(?=.{0,1})(?:|))</string>
+            <string>((\s|$)+)</string>
             <key>endCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>entity.name.type.gon</string>
+                <string>support.variable.gon</string>
               </dict>
             </dict>
           </dict>
@@ -194,10 +194,6 @@
             <key>include</key>
             <string>#string</string>
           </dict>
-          <dict>
-            <key>include</key>
-            <string>#quoteless_string</string>
-          </dict>
         </array>
       </dict>
       <key>bool</key>
@@ -232,7 +228,7 @@
             <key>contentName</key>
             <string>comment.gon</string>
             <key>end</key>
-            <string>(\*/)</string>
+            <string>(\*/(\s|$)*)</string>
             <key>endCaptures</key>
             <dict>
               <key>1</key>
@@ -292,6 +288,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#comments</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#bool</string>
           </dict>
           <dict>
@@ -301,10 +301,6 @@
           <dict>
             <key>include</key>
             <string>#string</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#quoteless_string</string>
           </dict>
         </array>
       </dict>
@@ -367,54 +363,18 @@
           </dict>
         </array>
       </dict>
-      <key>quoteless_string</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>match</key>
-            <string>([^\x{0028}\s\x{007c}\,\x{007c}\[\x{007c}\{\x{007c}\}\x{007c}\]\x{0029}]+(?=\s|\,|\}|\]|$))</string>
-            <key>name</key>
-            <string>string.gon</string>
-            <key>comment</key>
-            <string>quoteless_string</string>
-          </dict>
-        </array>
-      </dict>
       <key>string</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
-            <key>begin</key>
-            <string>(\&quot;)</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>string.gon</string>
-              </dict>
-            </dict>
-            <key>contentName</key>
+            <key>match</key>
+            <string>((&quot;(?:[^\x{0022}\x{005c}]|\\.)*&quot;)|([^\x{0028}\s\,\[\{\}\]\x{0024}\x{0029}]+))</string>
+            <key>name</key>
             <string>string.gon</string>
-            <key>end</key>
-            <string>(\&quot;)</string>
-            <key>endCaptures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>string.gon</string>
-              </dict>
-            </dict>
+            <key>comment</key>
+            <string>string</string>
           </dict>
-        </array>
-      </dict>
-      <key>string__1</key>
-      <dict>
-        <key>patterns</key>
-        <array>
         </array>
       </dict>
     </dict>
